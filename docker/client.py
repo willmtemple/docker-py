@@ -475,11 +475,13 @@ class Client(clientbase.ClientBase):
             True)
 
     @check_resource
-    def inspect_image(self, image):
+    def inspect_image(self, image, remote=False):
+        params = {}
+        if remote:
+            params['remote'] = 1
         return self._result(
-            self._get(
-                self._url("/images/{0}/json".format(image.replace('/', '%2F')))
-            ),
+            self._get(self._url("/images/{0}/json".format(image)),
+                      params=params),
             True
         )
 
